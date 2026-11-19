@@ -618,6 +618,8 @@ namespace
 			jz refreshCustomHighlightedOccupants
 			cmp eax, DataViewHighlightLandmarkEffect
 			jz refreshCustomHighlightedOccupants
+			cmp eax, DataViewHighlightDeathcare
+			jz refreshCustomHighlightedOccupants
 			jmp HighlightOccupant_Switch_Continue
 
 			refreshCustomHighlightedOccupants:

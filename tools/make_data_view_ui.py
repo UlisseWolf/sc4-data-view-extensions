@@ -11,13 +11,14 @@
 #                   the Data Views panel of the game (UI 0x96A006B0 / 0x2BC9060F) with a button for every data view
 #                   that has a cell: the Maxis buttons keep their IDs and cells (page 1), the others are buttons
 #                   0x5200 + view mode, hidden when they are not on page 1. Row 0 holds All Off and the page controls.
+#                   It also has hidden buttons for the data views of other plugins (EXTERNAL_BUTTONS).
 #
 # The DLL reads the cells when the panel opens, so a cell changed in DataViews.dat (or in a later plugin) moves the
 # button without a new UI; the UI only has to contain the button. See README.md, "Data View Button Cell".
 import os, re, struct, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dbpf2
-from data_view_layout import LAYOUT, MAXIS_BUTTONS, CUSTOM_BUTTON_BASE, CAPTIONS, CAPTION_1_0
+from data_view_layout import LAYOUT, MAXIS_BUTTONS, CUSTOM_BUTTON_BASE, CAPTIONS, CAPTION_1_0, EXTERNAL_BUTTONS
 
 UI_KEY = (0x00000000, 0x96A006B0, 0x2BC9060F)
 LTEXT = 0x2026960B
@@ -111,15 +112,17 @@ def build_ui(text, pages):
 
     template = children[ids.index(0x5002)].strip()   # Fire Hazard: a plain radio button
     new = []
-    for mode, (column, row) in sorted(LAYOUT.items(), key=lambda kv: (kv[1][1], kv[1][0])):
+    buttons = dict(LAYOUT)
+    buttons.update({mode: cell for mode, (_, cell) in EXTERNAL_BUTTONS.items()})
+    for mode, (column, row) in sorted(buttons.items(), key=lambda kv: (kv[1][1], kv[1][0])):
         if mode in MAXIS_BUTTONS:
             continue
         line = template.replace(' id=0x00005002', ' id=0x%08x' % (CUSTOM_BUTTON_BASE + mode), 1)
         line = re.sub(r'caption="[^"]*" captionres=\{[^}]*\}',
-                      'caption="%s" captionres={%08x,%08x}' % (CAPTIONS.get(mode, 'Data View'), BUTTON_TEXT_GROUP,
+                      'caption="%s" captionres={%08x,%08x}' % (CAPTIONS.get(mode) or EXTERNAL_BUTTONS.get(mode, ('Data View',))[0], BUTTON_TEXT_GROUP,
                                                                 caption_key(mode)), line, count=1)
         line = set_area(line, cell_area(column, row))
-        if row >= PAGE_ROWS:
+        if row >= PAGE_ROWS or mode in EXTERNAL_BUTTONS:
             line = line.replace('winflag_visible=yes', 'winflag_visible=no', 1)
         new.append(line)
 
@@ -177,7 +180,9 @@ def main(game, ui_1_0, transient, out_dir):
                        data=build_ui(ui['data'].decode('latin1'), pages).encode('latin1'))]
     ui_entries += [e for e in v10 if e['t'] == LTEXT and e['g'] == BUTTON_TEXT_GROUP]
     ui_entries += nav_images(game_entries)
-    ui_entries += [dict(t=LTEXT, g=BUTTON_TEXT_GROUP, i=CAPTION_BASE + m, data=ltext(c)) for m, c in sorted(CAPTIONS.items())]
+    captions = dict(CAPTIONS)
+    captions.update({m: c for m, (c, _) in EXTERNAL_BUTTONS.items()})
+    ui_entries += [dict(t=LTEXT, g=BUTTON_TEXT_GROUP, i=CAPTION_BASE + m, data=ltext(c)) for m, c in sorted(captions.items())]
 
     os.makedirs(out_dir, exist_ok=True)
     for name, entries in (('DataViews.dat', data_views), ('ExtendedDataViewUI.dat', ui_entries)):

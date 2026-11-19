@@ -72,6 +72,9 @@
     <ClInclude Include="occupant-highlight-filters\ParkEffectFilter.h">
       <Filter>Header Files\Occupant Highlight Filters</Filter>
     </ClInclude>
+    <ClInclude Include="occupant-highlight-filters\DeathcareFilter.h">
+      <Filter>Header Files\Occupant Highlight Filters</Filter>
+    </ClInclude>
     <ClInclude Include="occupant-highlight-filters\LandmarkEffectFilter.h">
       <Filter>Header Files\Occupant Highlight Filters</Filter>
     </ClInclude>
@@ -114,6 +117,9 @@
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
     <ClCompile Include="occupant-highlight-filters\ParkEffectFilter.cpp">
+      <Filter>Source Files\Occupant Highlight Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="occupant-highlight-filters\DeathcareFilter.cpp">
       <Filter>Source Files\Occupant Highlight Filters</Filter>
     </ClCompile>
     <ClCompile Include="occupant-highlight-filters\LandmarkEffectFilter.cpp">

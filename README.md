@@ -51,6 +51,7 @@ to the numeric value of the game's "DataView: Highlight mode" property (0x4A0B47
 |------|-------------------------------|-------------|
 | Park | 10 | Buildings that have a Park Effect exemplar property are highlighted. |
 | Landmark | 11 | Buildings that have a Landmark Effect exemplar property are highlighted. |
+| Deathcare | 12 | Cemeteries and crematoria of SC4SIM's deathcare (property `0x5C4DD001`, or occupant group `0x5C4DD100`, `0x5C4DD101` or the Maxis cemetery group `0x1700`) are highlighted. |
 
 ## Data View Button Cell
 
@@ -81,6 +82,10 @@ Both DAT files are built by `tools/make_data_view_ui.py` (cells in `tools/data_v
 `SimCity_1.dat` and the 1.0 DAT files in `dat/source`:
 
     python tools/make_data_view_ui.py "<SimCity 4>/SimCity_1.dat" "dat/source/ExtendedDataViewUI-1.0.dat" "dat/source/z_DataView - TransientAura.dat" dat
+
+The UI also has hidden buttons for data views that other plugins ship (`EXTERNAL_BUTTONS` in
+`tools/data_view_layout.py`): `0x5221` *Deathcare* for the deathcare data view of SC4SIM (`CAM_DataView.dat`). Such a
+button appears only when its data view, with a Data View Button Cell, is installed.
 
 To add a data view: give its exemplar a Data View Button Cell and add the button `0x5200 + view mode` to the UI (a
 line in `tools/data_view_layout.py` does both).

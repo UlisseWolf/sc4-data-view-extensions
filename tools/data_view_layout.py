@@ -45,3 +45,9 @@ CAPTIONS = {
     0x14: 'Residential Desir.', 0x15: 'Comm. Service Desir.', 0x16: 'Comm. Office Desir.', 0x17: 'Industrial Desir.',
 }
 CAPTION_1_0 = {0x1D: 0x4AD045DD, 0x0C: 0x4AD045DE, 0x0D: 0x4AD045DF}
+
+# Buttons for data views that other plugins ship (their exemplar and its Data View Button Cell come with them): the UI
+# has the button, hidden until the DLL finds the data view with a cell. view mode -> (caption, cell of the UI).
+EXTERNAL_BUTTONS = {
+    0x21: ('Deathcare', (1, 4)),   # SC4SIM CAM_DataView.dat: uncollected dead and cemeteries / crematoria
+}

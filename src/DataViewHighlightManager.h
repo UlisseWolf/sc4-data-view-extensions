@@ -39,6 +39,8 @@ enum DataViewHighlight : uint32_t
 
 	DataViewHighlightParkEffect = 10,
 	DataViewHighlightLandmarkEffect = 11,
+	// Cemeteries and crematoria of SC4SIM's deathcare.
+	DataViewHighlightDeathcare = 12,
 };
 
 class cIGZMessage2Standard;

@@ -17,6 +17,7 @@
 #include "GlobalPointers.h"
 #include "GZCLSIDDefs.h"
 #include "GZServPtrs.h"
+#include "DeathcareFilter.h"
 #include "LandmarkEffectFilter.h"
 #include "ParkEffectFilter.h"
 #include <algorithm>
@@ -46,6 +47,9 @@ void DataViewHighlightManager::Init(uint32_t highlightType)
 		break;
 	case DataViewHighlightLandmarkEffect:
 		occupantFilter = new LandmarkEffectFilter();
+		break;
+	case DataViewHighlightDeathcare:
+		occupantFilter = new DeathcareFilter();
 		break;
 	}
 

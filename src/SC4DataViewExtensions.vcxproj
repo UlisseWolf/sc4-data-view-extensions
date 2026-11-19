@@ -21,6 +21,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="DataViewHighlightManager.h" />
     <ClInclude Include="occupant-highlight-filters\IOccupantHighlightFilter.h" />
+    <ClInclude Include="occupant-highlight-filters\DeathcareFilter.h" />
     <ClInclude Include="occupant-highlight-filters\LandmarkEffectFilter.h" />
     <ClInclude Include="occupant-highlight-filters\ParkEffectFilter.h" />
     <ClInclude Include="Patcher.h" />
@@ -39,6 +40,7 @@
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="DataViewHighlightManager.cpp" />
+    <ClCompile Include="occupant-highlight-filters\DeathcareFilter.cpp" />
     <ClCompile Include="occupant-highlight-filters\LandmarkEffectFilter.cpp" />
     <ClCompile Include="occupant-highlight-filters\ParkEffectFilter.cpp" />
     <ClCompile Include="Patcher.cpp" />
